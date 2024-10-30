@@ -77,7 +77,7 @@ class _MainAppState extends State<MainApp> {
                     fit: BoxFit.contain,
                     height: height,
                   ),
-                  !kDebugMode
+                  kDebugMode
                       ? Positioned(
                           bottom: 20,
                           child: Center(
