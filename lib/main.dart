@@ -30,7 +30,7 @@ class _MainAppState extends State<MainApp> {
 
   Future<void> _onBarcodeScan(String value) async {
     final Directory directory = await getApplicationDocumentsDirectory();
-    bool exists = await File('${directory.path}/$value.png').exists();
+    bool exists = await File('${directory.path}s/$value.png').exists();
     if (exists) {
       setState(() {
         loadedFile = File('${directory.path}/$value.png');
@@ -45,8 +45,8 @@ class _MainAppState extends State<MainApp> {
       });
     } else {
       Fluttertoast.showToast(
-          msg: "Nie wykryto zdjęcia",
-          toastLength: Toast.LENGTH_SHORT,
+          msg: 'Nie wykryto zdjęcia ${kDebugMode ? value : ''}',
+          toastLength: kDebugMode ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
