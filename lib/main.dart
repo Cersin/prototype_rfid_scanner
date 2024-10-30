@@ -23,14 +23,21 @@ class _MainAppState extends State<MainApp> {
   Key key = UniqueKey();
   File? loadedFile;
   String? loadedValue;
+  bool visibleDrawer = true;
+
   @override
   void initState() {
     super.initState();
+    Future.delayed(const Duration(minutes: 1), () {
+      setState(() {
+        visibleDrawer = false;
+      });
+    });
   }
 
   Future<void> _onBarcodeScan(String value) async {
     final Directory directory = await getApplicationDocumentsDirectory();
-    bool exists = await File('${directory.path}s/$value.png').exists();
+    bool exists = await File('${directory.path}/$value.png').exists();
     if (exists) {
       setState(() {
         loadedFile = File('${directory.path}/$value.png');
@@ -67,9 +74,11 @@ class _MainAppState extends State<MainApp> {
     return MaterialApp(
       home: Scaffold(
           backgroundColor: Colors.black,
-          drawer: MainDrawer(
-            callback: _onSetImage,
-          ),
+          drawer: visibleDrawer
+              ? MainDrawer(
+                  callback: _onSetImage,
+                )
+              : null,
           body: loadedFile != null
               ? Stack(children: [
                   Image.file(
