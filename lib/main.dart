@@ -28,7 +28,7 @@ class _MainAppState extends State<MainApp> {
 
   Future<void> _onBarcodeScan(String value) async {
     final Directory directory = await getApplicationDocumentsDirectory();
-    bool exists = await File('${directory.path}/sssas$value.png').exists();
+    bool exists = await File('${directory.path}/$value.png').exists();
     if (exists) {
       setState(() {
         loadedFile = File('${directory.path}/$value.png');
