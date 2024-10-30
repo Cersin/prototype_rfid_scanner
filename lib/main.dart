@@ -30,7 +30,9 @@ class _MainAppState extends State<MainApp> {
     super.initState();
     Future.delayed(const Duration(minutes: 1), () {
       setState(() {
-        visibleDrawer = false;
+        if (!kDebugMode) {
+          visibleDrawer = false;
+        }
       });
     });
   }
