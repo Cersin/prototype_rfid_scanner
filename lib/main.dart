@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_listener/flutter_barcode_listener.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -21,6 +22,7 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   Key key = UniqueKey();
   File? loadedFile;
+  String? loadedValue;
   @override
   void initState() {
     super.initState();
@@ -32,11 +34,13 @@ class _MainAppState extends State<MainApp> {
     if (exists) {
       setState(() {
         loadedFile = File('${directory.path}/$value.png');
+        loadedValue = value;
       });
 
       Future.delayed(const Duration(seconds: 5), () {
         setState(() {
           loadedFile = null;
+          loadedValue = null;
         });
       });
     } else {
@@ -62,27 +66,30 @@ class _MainAppState extends State<MainApp> {
 
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-            leading: Builder(
-              builder: (context) {
-                return IconButton(
-                  icon: const Icon(Icons.menu),
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                );
-              },
-            ),
-          ),
+          backgroundColor: Colors.black,
           drawer: MainDrawer(
             callback: _onSetImage,
           ),
           body: loadedFile != null
-              ? Image.file(
-                  loadedFile!,
-                  fit: BoxFit.contain,
-                  height: height,
-                )
+              ? Stack(children: [
+                  Image.file(
+                    loadedFile!,
+                    fit: BoxFit.contain,
+                    height: height,
+                  ),
+                  !kDebugMode
+                      ? Positioned(
+                          bottom: 20,
+                          child: Center(
+                            child: Text(
+                              loadedValue ?? '',
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 24),
+                            ),
+                          ),
+                        )
+                      : const Center(),
+                ])
               : BarcodeKeyboardListener(
                   onBarcodeScanned: _onBarcodeScan,
                   child: AdsCarousel(
