@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_barcode_listener/flutter_barcode_listener.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
@@ -27,6 +28,8 @@ class _MainAppState extends State<MainApp> {
 
   @override
   void initState() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+
     super.initState();
     Future.delayed(const Duration(minutes: 1), () {
       setState(() {
@@ -76,6 +79,7 @@ class _MainAppState extends State<MainApp> {
     return MaterialApp(
       home: Scaffold(
           backgroundColor: Colors.black,
+          extendBodyBehindAppBar: true,
           drawer: visibleDrawer
               ? MainDrawer(
                   callback: _onSetImage,
