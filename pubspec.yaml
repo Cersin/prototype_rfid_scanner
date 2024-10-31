@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_barcode_listener: ^0.1.4
+  flutter_lock_task: ^0.0.2
   fluttertoast: ^8.2.8
   image_picker: ^1.1.2
   path_provider: ^2.1.5

@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:telegrosik/widgets/ads_carousel.dart';
 import 'package:telegrosik/widgets/main_drawer.dart';
+import 'package:flutter_lock_task/flutter_lock_task.dart';
 
 void main() {
   runApp(const MainApp());
@@ -29,6 +30,7 @@ class _MainAppState extends State<MainApp> {
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    _startKioskMode();
 
     super.initState();
     Future.delayed(const Duration(minutes: 1), () {
@@ -38,6 +40,12 @@ class _MainAppState extends State<MainApp> {
         }
       });
     });
+  }
+
+  Future<void> _startKioskMode() async {
+    // final name = await FlutterLockTask().getPackageName(); // com.example.telegrosik
+    await FlutterLockTask().setDeviceOwnerApp();
+    await FlutterLockTask().startLockTask();
   }
 
   Future<void> _onBarcodeScan(String value) async {
