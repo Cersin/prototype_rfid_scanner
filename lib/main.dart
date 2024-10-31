@@ -33,12 +33,11 @@ class _MainAppState extends State<MainApp> {
     _startKioskMode();
 
     super.initState();
-    Future.delayed(const Duration(minutes: 1), () {
-      setState(() {
-        if (!kDebugMode) {
-          visibleDrawer = false;
-        }
-      });
+  }
+
+  void _disableDrawer() {
+    setState(() {
+      visibleDrawer = false;
     });
   }
 
@@ -88,9 +87,30 @@ class _MainAppState extends State<MainApp> {
       home: Scaffold(
           backgroundColor: Colors.black,
           extendBodyBehindAppBar: true,
+          appBar: visibleDrawer
+              ? AppBar(
+                  leading: Builder(
+                    builder: (context) {
+                      return IconButton(
+                        icon: const Icon(Icons.menu),
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                        },
+                      );
+                    },
+                  ),
+                )
+              : null,
           drawer: visibleDrawer
               ? MainDrawer(
                   callback: _onSetImage,
+                )
+              : null,
+          floatingActionButton: visibleDrawer
+              ? FloatingActionButton.extended(
+                  onPressed: _disableDrawer,
+                  icon: const Icon(Icons.block),
+                  label: const Text('Zablokuj nawigację'),
                 )
               : null,
           body: loadedFile != null
