@@ -64,7 +64,7 @@ class _MainAppState extends State<MainApp> {
       });
     } else {
       Fluttertoast.showToast(
-          msg: 'Nie wykryto zdjęcia ${kDebugMode ? value : ''}',
+          msg: 'Nie znaleziono ${kDebugMode ? value : ''}',
           toastLength: kDebugMode ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
