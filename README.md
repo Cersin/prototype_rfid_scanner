@@ -1,3 +1,3 @@
-# telegrosik
+# telegrosik rdif scanner protoype
 
-A new Flutter project.
+![Uploading IMG_2767.jpg…]()
